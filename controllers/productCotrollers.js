@@ -48,7 +48,7 @@ const addProduct=async (req,res)=>{
 
     res.json({success:true,message:"product Added"})
     }catch(error){
-     console,log(error)
+     console.log(error)
      res.json({success:false,message:error.message})
     }
 }
@@ -57,9 +57,11 @@ const addProduct=async (req,res)=>{
 
 const removeProduct =async(req,res)=>{
     try{
-
+        await productModel.findByIdAndDelete(req.body.id)
+        res.json({success:true,message:"product delet"})
     }catch(error){
-
+        console.log(error)
+        res.json({success:false,message:error.message})  
     }
 
 }
@@ -67,18 +69,23 @@ const removeProduct =async(req,res)=>{
 // conroller function for singel product details
 const singleProduct =async (req,res)=>{
     try{
-
+     const productId=req.body.id
+     const product=await productModel.findById(productId)
+     res.json({success:true,product})
     }catch(error){
-         
+        console.log(error)
+        res.json({success:false,message:error.message})  
     }
 }
     
 // conroller function for  product list
 const listProduct =async (req,res)=>{
     try{
-
+     const products= await productModel.find({})
+     res.json({success:true, products})
     }catch(error){
-         
+        console.log(error)
+        res.json({success:false,message:error.message})  
     }
 }
 
